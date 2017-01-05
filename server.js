@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var router = express();
 var app = express();
+var port = process.env.port||8080;
 app.use (logger('dev'));
 app.use (bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -18,7 +19,7 @@ app.get('/',(reg,res)=>
 //tao webhook
 app.get('/webhook',function(req,res)
 {
-	if (req.query['hub.verify_token'] === 'ma_xac_minh_cua_ban'){
+	if (req.query['hub.verify_token'] === 'thanhha278'){
 		res.send(req.query['hub.challenge']);
 	}
 	res.send('error');
@@ -64,8 +65,6 @@ function sendMessage(senderID,message)
 		}
 	});
 }
-app.set('port',process.env.openshift_nodejs_port||process.env.port||3302);
-app.set('ip',process.env.openshift_nodejs_ip||process.env.ip||127.0.0.1);
-server.listen(app.get('port'),app.get('ip'),function(){
-	console.log('chatbot listening at %s:%d', app.get('ip'),app.get('port'));
+app.listen(port,function(){
+	console.log('running on '+port);
 });
