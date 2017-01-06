@@ -1,2 +1,0 @@
-# myproj
-something bullshit
